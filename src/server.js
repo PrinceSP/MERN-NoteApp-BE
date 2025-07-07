@@ -3,13 +3,16 @@ import dotenv from "dotenv"
 import { connectDB } from "./config/db.js"
 import notesRouter from './routes/noteRoute.js'
 import userRouter from "./routes/userRoute.js"
+import rateLimiter from '../middleware/rateLimiter.js'
 
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5009
 
+//middleware
 app.use(express.json()) //middleware to allow access the request.body contents
+app.use(rateLimiter) //middleware to control request rate limit
 
 app.use("/api/notes", notesRouter)
 app.use("/api/user", userRouter)
