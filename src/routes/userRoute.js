@@ -1,12 +1,13 @@
-import express from "express";
-import { getAllUser, getUserById, createUser, updateUserById, deleteUserById } from "../controllers/userControllers.js";
+import express from 'express'
+import * as userController from "../controllers/userControllers.js"
+import rateLimiter from "../middleware/rateLimiter.js"
 
-const router = express.Router()
+const userRoute = express.Router()
 
-router.get("/", getAllUser)
-router.get("/:id", getUserById)
-router.post("/", createUser)
-router.put("/:id", updateUserById)
-router.delete("/:id", deleteUserById)
+userRoute.get("/", userController.getAllUser)
+userRoute.get("/:id", userController.getUserById)
+userRoute.post("/", rateLimiter, userController.createUser)
+userRoute.put("/:id", rateLimiter, userController.updateUserById)
+userRoute.delete("/:id", userController.deleteUserById)
 
-export default router
+export default userRoute
