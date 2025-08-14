@@ -1,11 +1,9 @@
 import mongoose from "mongoose"
 
-const connectDB = async () => {
+export default async function connectDB {
   try {
     await mongoose.connect(process.env.MONGO)
   } catch (error) {
     process.exit(1)
   }
 }
-
-export default connectDB
